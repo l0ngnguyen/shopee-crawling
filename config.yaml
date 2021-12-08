@@ -1,0 +1,19 @@
+start_urls:
+  - 'https://shopee.vn/shop/409028956/search'
+  - 'https://shopee.vn/shop/77623146/search'
+  
+css_selectors:
+  n_pages: 'span.shopee-mini-page-controller__total::text' 
+  shop_name: "div._3uf2ae::text"
+  name: "div.attM6y span::text"
+  price: "div.Ybrg9j::text"
+  rate: "div._3LRxdy::text"
+  describe: "div._3yZnxJ span::text"
+  n_solded: "div.aca9MM::text"
+  rating: "div.OitLRu::text"
+  n_items: "div.aPKXeO div::text"
+  type: "div.flex.items-center._1J-ojb span::text"
+
+download_delay: 1.5
+
+output: './product2.csv'
