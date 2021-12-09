@@ -13,6 +13,7 @@ class ShopeeItem(scrapy.Item):
     discount_rate = scrapy.Field()
     describe = scrapy.Field()
     n_solded = scrapy.Field()
-    rating = scrapy.Field()
+    rating_score = scrapy.Field()
+    n_ratings = scrapy.Field()
     n_items = scrapy.Field()
     type = scrapy.Field()

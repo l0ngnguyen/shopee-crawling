@@ -6,7 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-from utils import load_download_delay, load_output_path, get_output_file_format
+from utils import load_specific_config, get_output_file_format
 
 BOT_NAME = 'shopee'
 
@@ -31,19 +31,26 @@ SPLASH_COOKIES_DEBUG = False
 SPIDER_MIDDLEWARES = {
     'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
 }
+
 DOWNLOADER_MIDDLEWARES = {
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 400
 }
-DOWNLOAD_DELAY = load_download_delay()
+
+DOWNLOAD_DELAY = load_specific_config('download_delay')
 
 FEEDS = {
-    load_output_path(): {
+    load_specific_config('output'): {
         "format": get_output_file_format(),
         "overwrite": True
     }
+}
+
+ITEM_PIPELINES = {
+    'shopee.pipelines.PreprocessPipeline': 300,
+    'shopee.pipelines.InsertDBPipeline': 400
 }
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -85,12 +92,6 @@ FEEDS = {
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 # EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
-# }
-
-# Configure item pipelines
-# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'shopee.pipelines.ShopeePipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

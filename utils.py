@@ -1,25 +1,10 @@
 import yaml
 
-def load_selectors():
+def load_specific_config(config_type):
     with open('config.yaml', 'r') as f:
-        selectors = yaml.load(f, yaml.FullLoader)['css_selectors']
-    return selectors
-
-def load_start_urls():
-    with open('config.yaml', 'r') as f:
-        start_urls = yaml.load(f, yaml.FullLoader)['start_urls']
-    return start_urls
-
-def load_download_delay():
-    with open('config.yaml', 'r') as f:
-        download_delay = yaml.load(f, yaml.FullLoader)['download_delay']
-    return download_delay
-
-def load_output_path():
-    with open('config.yaml', 'r') as f:
-        output = yaml.load(f, yaml.FullLoader)['output']
-    return output
+        config = yaml.load(f, yaml.FullLoader)[config_type]
+    return config
 
 def get_output_file_format():
-    output = load_output_path()
+    output = load_specific_config('output')
     return output.split('.')[-1]
