@@ -20,7 +20,6 @@ class PreprocessPipeline:
                     item[attr_name] = convert_method(value)
             except:
                 item[attr_name] = val_if_none
- 
 
     def process_item(self, item, spider):
         self._process_attr(item, 'n_items', int)
@@ -28,12 +27,13 @@ class PreprocessPipeline:
         self._process_attr(item, 'n_ratings', int, 0)
 
         s = item['n_solded']
-        if s[-1] == 'k':
-            s = s.replace(',', '')
-            s = s.replace('k', '')
-            item['n_solded'] = int(s) * 100
-        else:
-            self._process_attr(item, 'n_solded', int)
+        if s:
+            if s[-1] == 'k':
+                s = s.replace(',', '')
+                s = s.replace('k', '')
+                item['n_solded'] = int(s) * 100
+            else:
+                self._process_attr(item, 'n_solded', int)
 
         dr = item['discount_rate'] if item['discount_rate'] else '0% giảm'
         item['discount_rate'] = int(dr.split('%')[0])
